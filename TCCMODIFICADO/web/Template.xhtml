@@ -15,37 +15,32 @@ and open the template in the editor.
        
         <title>TFD</title>
         <link type="css/text" rel="stylesheet" href="./resources/Tema_1.css" />
-    
-        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+       <a href="CadastroFuncionario.xhtml"> Funcionario </a>  
         
     </h:head>
     
     <h:body>
         
-         <div id="bottom">
-             <img src="./resources/imagens/tfd.jpg" align="center" />
-            <div id="textop" align="center">
-                <h2> Tratamento Fora de Domicilio </h2>
-            </div>
-            <div align="center">
-           
-            </div>
-        </div>
+         <h:form>
+            <p:growl id="growl" showDetail="true" sticky="true" />   
+            <p:menubar>
+                <p:menuitem value="Login" icon="ui-icon-key"  url="Login1.xhtml"/>  
+                <p:submenu label="Cadastros" icon="ui-icon-pencil">  
+                    <p:menuitem value="Funcionario" url="CadastroFuncionario.xhtml" />                    
+                   
+
+                </p:submenu>
         
+            </p:menubar>
+         </h:form>
         
-        <ui:insert name="bottom">
-                <div id="autoria" align="center">
-                    <b> TFD - Tratamento Fora de Domicilio</b> <br/>
-                    Desenvolvido por Rosiane dos Santos Nascimento <br/>
-                    TCC - Trabalhado de Conclusão de Cursos <br/>
-                    IFNMG - Campus Januária <br/>
-                    Cursos Superior em Tecnologia em Análise e Desenvolvimento de Sistemas
-                </div>
-            </ui:insert>
-        
+         
+         
+                 
+                
         
     </h:body>
     

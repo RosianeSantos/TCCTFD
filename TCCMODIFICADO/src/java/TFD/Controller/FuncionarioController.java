@@ -8,8 +8,6 @@ package TFD.Controller;
 
 import TFD.Entidade.Funcionario;
 import TFD.Negocio.IFuncionarioRepositorio;
-import TFD.Negocio.ITipoFuncionarioRepositorio;
-import TFD.Negocio.TipoFuncionario;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -29,11 +27,9 @@ public class FuncionarioController implements Serializable {
     Funcionario entidade;
     Funcionario filtro;
     List<Funcionario> listagem;
-    List<TipoFuncionario> listagemTipos;
     @EJB
     IFuncionarioRepositorio dao;
-    @EJB
-    ITipoFuncionarioRepositorio daoTipo;
+    
 
     /**
      * Creates a new instance of FuncionarioController
@@ -169,21 +165,13 @@ public class FuncionarioController implements Serializable {
      *
      * @return
      */
-    public List<TipoFuncionario> getListagemTipos() {
-        if (listagemTipos == null) {
-            listagemTipos = daoTipo.Buscar(null);
-        }
-        return listagemTipos;
-    }
+    
 
     /**
      *
      * @param listagemTipos
      */
-    public void setListagemTipos(List<TipoFuncionario> listagemTipos) {
-
-        this.listagemTipos = listagemTipos;
-    }
+   
 
     /**
      *
