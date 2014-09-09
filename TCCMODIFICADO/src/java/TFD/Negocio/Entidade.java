@@ -10,6 +10,6 @@ package TFD.Negocio;
  *
  * @author Rosy
  */
-interface Entidade {
+public interface Entidade {
       public Long getId();
 }

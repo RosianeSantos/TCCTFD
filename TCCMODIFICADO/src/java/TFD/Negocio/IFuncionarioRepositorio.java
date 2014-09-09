@@ -7,6 +7,7 @@
 package TFD.Negocio;
 
 import TFD.Entidade.Funcionario;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -24,4 +25,6 @@ public interface IFuncionarioRepositorio
      */
     public Funcionario porLogin(String login);
     public boolean login(String usuario, String senha);
+
+    public List<Funcionario> Buscar(Funcionario obj);
    }

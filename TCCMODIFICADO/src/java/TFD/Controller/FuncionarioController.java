@@ -50,7 +50,7 @@ public class FuncionarioController implements Serializable {
 
     /**
      *
-     */
+     Criando o Metodo de salvar */
     public void salvar() {
         if(entidade.getNome().trim().length() == 0){
            exibirMensagem("Valor Inválido, preencha o campo: NOME com caracteres diferentes de espaço!");

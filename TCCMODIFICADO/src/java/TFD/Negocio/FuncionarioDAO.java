@@ -7,50 +7,101 @@
 package TFD.Negocio;
 
 import TFD.Entidade.Funcionario;
-import javax.persistence.EntityManager;
+import java.util.HashMap;
+import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 /**
  *
  * @author Rosy
  */
-public class FuncionarioDAO {
-    EntityManager ge = DAOGenerico.getGerenciadorEntidade();
-    
-    /**
-     * Metodo com a finalidade apenas de salvar um usuario.
-     * @param funcionario Objeto do tipo usuario.
-     */
-    public void cadastrarUsuario(Funcionario funcionario){
-        ge.getTransaction().begin();
-        ge.persist(funcionario);
-        ge.getTransaction().commit();
+@Stateless(name = "IFuncionarioRepositorio")
+public class FuncionarioDAO 
+        extends DAOGenerico<Funcionario>
+        implements IFuncionarioRepositorio {
+
+    public FuncionarioDAO() {
+        super(Funcionario.class);
+    }
+
+    @Override
+    public List<Funcionario> Buscar(Funcionario obj) {
+        // Corpo da consulta
+        String consulta = "select f from Funcionario f";
+
+        // A parte where da consulta
+        String filtro = "";
+
+        // Guarda a lista de parâmetros da query
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+
+        // Verifica campo por campo os valores que serão filtrados
+        if (obj != null) {
+            if (obj.getNome() != null && obj.getNome().length() > 0) {
+                filtro += " lower(f.nome) like lower('%" + obj.getNome() + "%')";                
+            }
+
+            if (obj.getLogin() != null && obj.getLogin().length() > 0) {
+                if (filtro.length() > 0) {
+                    filtro += " and ";
+                }
+                filtro += " f.login=:login ";
+                parametros.put("login", obj.getLogin());
+            }
+
+            if (obj.getId() != null && obj.getId() > 0) {
+                if (filtro.length() > 0) {
+                    filtro = filtro + " and ";
+                }
+                filtro += " f.id =:id";
+                parametros.put("id", obj.getId());
+            }
+
+            if (obj.getSenha() != null && obj.getSenha().length() > 0) {
+                if (filtro.length() > 0) {
+                    filtro = filtro + " and ";
+                }
+                filtro += " f.senha=:senha";
+                parametros.put("senha", obj.getSenha());
+            }
+
+            // Se houver filtros, coloca o "where" na consulta
+            if (filtro.length() > 0) {
+                consulta = consulta + " where " + filtro;
+            }
+        }
+
+        // Cria a consulta no JPA
+        Query query = manager.createQuery(consulta);
+
+        // Aplica os parâmetros da consulta
+        for (String par : parametros.keySet()) {
+            query.setParameter(par, parametros.get(par));
+        }
+
+        // Executa a consulta
+        return query.getResultList();
+
     }
     
-      /**
-     * Obtem o usuario atravez do codigo.
-     * @param CodFuncionario tipo String.
-     * @return 
-     */
-    public Funcionario obterUsuarioCodigo(String CodFuncionario){
-        Query query = ge.createQuery("SELECT f FROM Funcionario f WHERE f.CodFuncionario =:codFuncionario");
-        query.setParameter("codEmergencia", CodFuncionario);
-        Funcionario funcionario = (Funcionario) query.getSingleResult();
-        return funcionario;
+    @Override
+    public Funcionario porLogin(String login){
+        String consulta = "select f from Funcionario f where f.login=:login";
+                // Cria a consulta no JPA
+        Query query = manager.createQuery(consulta);
+
+        // Aplica os parâmetros da consulta
+        query.setParameter("login", login);
+
+        // Executa a consulta
+        return (Funcionario)query.getSingleResult();
+
+
     }
-            
-    /**
-     * Metodo que busca um usuario no banco de dados, pelo nome.
-     * @param nome tipo String
-     * @return Objeto do tipo Funcionario.
-     */
-    public Funcionario obterFuncionario(String nome){
-        Query query = ge.createQuery("SELECT f FROM Funcionario f WHERE f.nome =:nome");
-        query.setParameter("nome", nome);      
-        Funcionario funcionario = (Funcionario) query.getSingleResult();
-        return funcionario;
+
+    @Override
+    public boolean login(String usuario, String senha) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
- /**   public void alterarFuncionario(Funcionario funcionario){
-        this.cadastrarfuncionario(funcionario);
-    }**/
 }

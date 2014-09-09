@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 
 /**
@@ -22,83 +23,54 @@ import javax.persistence.Id;
 public class Funcionario implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-    @Column(nullable = false)
-    private String Nome;
-    @Column(nullable = false)
-    private String Login;
-    @Column (nullable = false)
-    private String Senha;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    @ManyToOne
+    private String nome;
+    private String login;
+    private String senha;
     
     /**
      *
      * @return
      */
-    public String getSenha() {
-        return Senha;
+   public Long getId() {
+        return id;
     }
 
-    /**
-     *
-     * @param Senha
-     */
-    public void setSenha(String Senha) {
-        this.Senha = Senha;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public Long getId() {
-        return Id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    /**
-     *
-     * @param Id
-     */
-    public void setId(Long Id) {
-        this.Id = Id;
-    }
-
-    /**
-     *
-     * @return
-     */
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
-    /**
-     *
-     * @param Nome
-     */
-    public void setNome(String Nome) {
-        this.Nome = Nome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getLogin() {
-        return Login;
+        return login;
     }
 
-    /**
-     *
-     * @param Login
-     */
-    public void setLogin(String Login) {
-        this.Login = Login;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
      @Override
     public int hashCode() {
         int hash = 0;
-        hash += (Id != null ? Id.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -109,7 +81,7 @@ public class Funcionario implements Serializable{
             return false;
         }
         Funcionario other = (Funcionario) object;
-        if ((this.Id == null && other.Id != null) || (this.Id != null && !this.Id.equals(other.Id))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -117,7 +89,7 @@ public class Funcionario implements Serializable{
 
     @Override
     public String toString() {
-        return Nome;
+        return nome;
     }
     
   
